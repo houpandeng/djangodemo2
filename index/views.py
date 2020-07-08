@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import *
-from django.db.models import Q, Avg, Count, Sum, Max, Min
+from django.db.models import Q
 from django.template import loader
 # Create your views here.
 def index_views(requet):
@@ -107,29 +107,6 @@ def queryall(request):
 
     # authors = author.objects.exclude(id =1)
     # print(authors.query)
-    # 聚合查询（不带分组）
-    # author.objects.all().aggregate(avg=聚合函数('列'))
-    # 语法：aggregate()
-    # authors = author.objects.all().aggregate(avg=Avg('age'))
-    # print(authors['avg'])
-    # authors1 = author.objects.all().aggregate(avg=Count('age'))
-    # print(authors1['avg'])
-    # authors2 = author.objects.all().aggregate(avg=Sum('age'))
-    # print(authors2['avg'])
-    # authors3 = author.objects.all().aggregate(avg=Max('age'))
-    # print(authors3['avg'])
-    # authors4 = author.objects.all().aggregate(avg=Min('age'))
-    # print(authors4['avg'])
-    # 聚合查询（带分组）
-    # author.objects.all().values('列1','列2').annotate(列 = 聚合函数()).values('列1','列2')
-    # 语法：annotate()
-    # res = author.objects.values('isActive').annotate(sum=Sum('age')).all()
-    # print(res)
-    # 排序查询
-    # 语法：order_by()
-    # Entry.objects.order_by('列1','列2')
-    # 默认升序，列名加'-',则按降序排序
-    # res = author.objects.order_by('-id')
-    # print(res.query)
+
     return HttpResponse('query ok')
 
