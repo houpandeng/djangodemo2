@@ -110,6 +110,6 @@ def queryall(request):
 
     return HttpResponse('query ok')
 
-你是python1
+
 
 
