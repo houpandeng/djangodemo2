@@ -132,5 +132,3 @@ def queryall(request):
     # res = author.objects.order_by('-id')
     # print(res.query)
     return HttpResponse('query ok')
-111
-11111111111111111111111111111111111111111
