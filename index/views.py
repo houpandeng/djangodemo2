@@ -108,10 +108,8 @@ def queryall(request):
     # authors = author.objects.exclude(id =1)
     # print(authors.query)
 
-
     return HttpResponse('query ok')
 
-
-
+你是python
 
 
