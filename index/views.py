@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import *
 from django.db.models import Q, Avg, Count, Sum, Max, Min
 from django.template import loader
@@ -101,6 +101,11 @@ def query_views(request):
     for au in authors:
         print(au['name'])
     return HttpResponse('query ok')
+# def queryall_views(request):
+#     authors = author.objects.filter(isActive=True)
+#     return render(request,'07-queryall.html',locals())
+
+
 def queryall_views(request):
     authors = author.objects.filter(isActive=True)
     return render(request,'07-queryall.html',locals())
@@ -108,8 +113,6 @@ def queryall_views(request):
 # 查询到前端页面展示，id
 def update_views(request,id):
     authors=author.objects.get(id=id)
-    print(authors.name,authors.age,authors.email)
-
     return render(request,'08-update.html',locals())
 
 def queryall(request):
@@ -162,3 +165,24 @@ def queryall(request):
     # res = author.objects.order_by('-id')
     # print(res.query)
     return HttpResponse('query ok')
+
+
+def update09_views(request):
+# 修改id为2得author得信息
+#     au = author.objects.get(id=2)
+#     au.age = 38
+#     au.email = 'b1822087@163.com'
+#     au.isActive = False
+#     au.save()
+# 修改isActive更改为True
+#     author.objects.filter(isActive=False).update(isActive = True)
+# 删除：delete
+#      au = author.objects.get(id=1)
+#      au.delete()
+
+     return HttpResponse('update success')
+def delete_views(request,id):
+    authors = author.objects.get(id=id)
+    authors.isActive= False
+    authors.save()
+    return queryall_views(request)

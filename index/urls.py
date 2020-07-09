@@ -16,8 +16,8 @@ urlpatterns += [
 
     path('07-queryall/',queryall_views,name='queryall'),
     url(r'^08-update/(\d{1,})/$', update_views,name='update'),
-
-
+    url(r'^10-delete/(\d{1,})/$', delete_views,name='delete'),
+    path('09-update/', update09_views, name='update_au'),
 ]
 
 
