@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>修改-{{ author.name }}</title>
+</head>
+<body>
+  <form action="">
+    <p>
+      姓名:
+      <input type="text" name="name" value="{{ authors.name }}">
+    </p>
+    <p>
+      年龄:
+      <input type="text" name="age" value="{{ authors.age }}">
+    </p>
+    <p>
+      邮箱:
+      <input type="email" name="email" value="{{ authors.email }}">
+      <input type="hidden" name="id" value="{{ authors.id }}">
+    </p>
+    <p>
+      <input type="submit">
+    </p>
+  </form>
+</body>
+</html>
