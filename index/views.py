@@ -80,7 +80,37 @@ def add_views(request):
     book1 = bOOK(**dic)
     book1.save()
     return HttpResponse('add ok')
+def query_views(request):
+    # 所有的查询接口必须通过Entry.objects 去调用
+    # all():查询 author 实体中所有的数据
+    # authors = author.objects.all()
+    # print(authors.query)
+    # print('authors')
+    # 循环遍历authors得到每一个数据
+    # for i in authors:
+    #     print(i.id,i.name,i.age,i.email)
 
+    # values() 查询部分数据封装到字典中在封装到列表中
+    # 查询authors实体中所有行所有列封装到字典再封装到列表中
+    authors = author.objects.values()
+    # 查询authors实体中所有行的name和email列封装到字典再封装
+    authors = author.objects.values('name','email')
+    # 查询authors实体中所有行的name和email列封装到字典再封装
+    # authors = author.objects.all().values('name','email')
+    print(authors)
+    for au in authors:
+        print(au['name'])
+    return HttpResponse('query ok')
+def queryall_views(request):
+    authors = author.objects.filter(isActive=True)
+    return render(request,'07-queryall.html',locals())
+
+# 查询到前端页面展示，id
+def update_views(request,id):
+    authors=author.objects.get(id=id)
+    print(authors.name,authors.age,authors.email)
+
+    return render(request,'08-update.html',locals())
 
 def queryall(request):
     # 只能查一条

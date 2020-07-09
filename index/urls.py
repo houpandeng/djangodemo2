@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import include,url
 from index.views import *
 urlpatterns = [
     path('index/', index_views),
@@ -11,3 +12,10 @@ urlpatterns = [
     path('06-queryall/', queryall ),
 ]
 
+urlpatterns += [
+
+    path('07-queryall/',queryall_views,name='queryall'),
+    url(r'^08-update/(\d{1,})/$', update_views,name='update'),
+
+
+]
