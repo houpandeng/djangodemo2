@@ -163,4 +163,3 @@ def queryall(request):
     # print(res.query)
     return HttpResponse('query ok')
 
-111
