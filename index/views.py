@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect
 from .models import *
 from django.db.models import Q, Avg, Count, Sum, Max, Min
@@ -183,6 +183,11 @@ def update09_views(request):
      return HttpResponse('update success')
 def delete_views(request,id):
     authors = author.objects.get(id=id)
+    # 通过isActive= False模拟删除
     authors.isActive= False
     authors.save()
-    return queryall_views(request)
+    # 查看queryall_views中的内容
+    # return queryall_views(request)
+# 使用重定向到/07-queryall
+#     return HttpResponseRedirect('/index/07-queryall')
+    return redirect('/index/07-queryall')
