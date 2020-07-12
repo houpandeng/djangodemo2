@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,redirect
 from .models import *
-from django.db.models import Q,F,Avg, Count, Sum, Max, Min
+from django.db.models import Q, Avg, Count, Sum, Max, Min
 from django.template import loader
 # Create your views here.
 def index_views(requet):
@@ -191,37 +191,3 @@ def delete_views(request,id):
 # 使用重定向到/07-queryall
 #     return HttpResponseRedirect('/index/07-queryall')
     return redirect('/index/07-queryall')
-# 1.F查询和Q查询
-# 作用：在执行中获取某列的值
-#     更新author中所有人的age都+10
-#     SQL:update author set age = age+10
-# djando:author.objects.all().update(age=F('age')+10)
-
-
-def doF_views(request):
-  author.objects.all().update(age=F('age')+10)
-  return redirect('/07-queryall')
-
-# Q()
-# 作用：在查询条件中可以完成or操作
-# 语法：
-# from django.db.models import Q
-# Q(条件)|Q(表达式)
-# ex:查询author中id为1或年龄为48的人的信息
-# author.objects.filter(Q(id=1)|Q(age=148))
-
-# 原生sql语句
-def raw_views(request):
-    sql = 'select * from index_author where age>142'
-    authors = author.objects.raw(sql)
-    for au in authors:
-        print(au.name,au.age,au.email)
-    return HttpResponse('query ok')
-#
-# 2.增删改
-#     from django.db import connection
-#     def doSQL(request):
-#         with connection.cursor()as cursor:
-#             sql = 'delete from .....'
-#             cursor.exxcute(sql)
-#             return ''
