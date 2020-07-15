@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render,redirect
 from .models import *
 from django.db.models import Q, Avg, Count, Sum, Max, Min
 from django.template import loader
@@ -101,6 +101,11 @@ def query_views(request):
     for au in authors:
         print(au['name'])
     return HttpResponse('query ok')
+# def queryall_views(request):
+#     authors = author.objects.filter(isActive=True)
+#     return render(request,'07-queryall.html',locals())
+
+
 def queryall_views(request):
     authors = author.objects.filter(isActive=True)
     return render(request,'07-queryall.html',locals())
@@ -108,8 +113,6 @@ def queryall_views(request):
 # 查询到前端页面展示，id
 def update_views(request,id):
     authors=author.objects.get(id=id)
-    print(authors.name,authors.age,authors.email)
-
     return render(request,'08-update.html',locals())
 
 def queryall(request):
@@ -162,4 +165,90 @@ def queryall(request):
     # res = author.objects.order_by('-id')
     # print(res.query)
     return HttpResponse('query ok')
+
+
+
+def update09_views(request):
+# 修改id为2得author得信息
+#     au = author.objects.get(id=2)
+#     au.age = 38
+#     au.email = 'b1822087@163.com'
+#     au.isActive = False
+#     au.save()
+# 修改isActive更改为True
+#     author.objects.filter(isActive=False).update(isActive = True)
+# 删除：delete
+#      au = author.objects.get(id=1)
+#      au.delete()
+
+     return HttpResponse('update success')
+def delete_views(request,id):
+    authors = author.objects.get(id=id)
+    # 通过isActive= False模拟删除
+    authors.isActive= False
+    authors.save()
+    # 查看queryall_views中的内容
+    # return queryall_views(request)
+# 使用重定向到/07-queryall
+#     return HttpResponseRedirect('/index/07-queryall')
+    return redirect('/index/07-queryall')
+
+# def doF_views(request):
+#   author.objects.all().update(age=F('age')+10)
+#   return redirect('/07-queryall')
+#
+# def raw_views(request):
+#   # sql = "select * from index_author where age>45"
+#   authors = author.objects.raw(sql)
+#   for au in authors:
+#     print(au.name,au.age,au.email)
+#   return HttpResponse("Query OK")
+# 上传头像
+def authors_views(request):
+    authors = author.objects.all()
+    return render(request,'13-authors.html',locals())
+# 4.映射关系
+#     1.语法
+#         在关联的两个类中的任何一个类中：
+#         属性 = models.OneToOneField(Entry)
+# class author(models.Model):
+#     if ......:
+#
+# class wife(models.Model):
+#     ... ....
+#     # 增加对author的一对一引用
+#     author = models.OneToOneField(author)
+# 在数据库中：
+#     生产一个外键（author_id）列在wife表中,要引用自author表中的主键
+# 在author的实体中
+#     增加一个隐式属性叫wife
+# 老版本默认值on_delete=models.CASCADE
+
+def oto_views(request):
+    # wifes = wife()
+    # wifes.name = '王夫人'
+    # wifes.age = 26
+    # # 指定指定author_id的值(author_id由OneToOneField隐式增加的属性)
+    # wifes.author_id = 1
+    # wifes.save()
+    # 正向查询
+    wifes = wife.objects.get(id = 1)
+    wife_author = wifes.author
+    # 反向查询
+    authors = author.objects.get(id = 1)
+    authors_wife = authors.wife
+    return render(request,'14-oto.html',locals())
+    # return HttpResponse('wife ok')
+
+# 一对一查询
+#     1.正向查询：直接通过关联属性查询
+#     通过wife找author
+#     wife = wife.objects.get(id =1)
+#     author = wife.author
+#     2.反向查询：通过反向引用属性查询
+#     通过author找wife
+#     authors = author.objects.get(id = 1)
+#     wife = author.wife
+
+
 
