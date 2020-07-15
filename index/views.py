@@ -1,5 +1,5 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render,redirect
+from django.http import HttpResponse
+from django.shortcuts import render
 from .models import *
 from django.db.models import Q, Avg, Count, Sum, Max, Min
 from django.template import loader
@@ -101,11 +101,6 @@ def query_views(request):
     for au in authors:
         print(au['name'])
     return HttpResponse('query ok')
-# def queryall_views(request):
-#     authors = author.objects.filter(isActive=True)
-#     return render(request,'07-queryall.html',locals())
-
-
 def queryall_views(request):
     authors = author.objects.filter(isActive=True)
     return render(request,'07-queryall.html',locals())
@@ -113,6 +108,8 @@ def queryall_views(request):
 # 查询到前端页面展示，id
 def update_views(request,id):
     authors=author.objects.get(id=id)
+    print(authors.name,authors.age,authors.email)
+
     return render(request,'08-update.html',locals())
 
 def queryall(request):
@@ -166,28 +163,3 @@ def queryall(request):
     # print(res.query)
     return HttpResponse('query ok')
 
-
-def update09_views(request):
-# 修改id为2得author得信息
-#     au = author.objects.get(id=2)
-#     au.age = 38
-#     au.email = 'b1822087@163.com'
-#     au.isActive = False
-#     au.save()
-# 修改isActive更改为True
-#     author.objects.filter(isActive=False).update(isActive = True)
-# 删除：delete
-#      au = author.objects.get(id=1)
-#      au.delete()
-
-     return HttpResponse('update success')
-def delete_views(request,id):
-    authors = author.objects.get(id=id)
-    # 通过isActive= False模拟删除
-    authors.isActive= False
-    authors.save()
-    # 查看queryall_views中的内容
-    # return queryall_views(request)
-# 使用重定向到/07-queryall
-#     return HttpResponseRedirect('/index/07-queryall')
-    return redirect('/index/07-queryall')

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for author in authors %}
+        <div>
+            <h3>{{ author.name }}</h3>
+            <h3>{{ author.email }}</h3>
+            {% if author.picture %}
+                <p>
+                    <img src="/{{author.picture}}" >
+                </p>
+            {% endif %}
+        </div>
+    {% endfor%}
+
+</body>
+</html>/

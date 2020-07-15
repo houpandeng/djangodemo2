@@ -25,20 +25,24 @@ def __repr__(self):
     return '<author:%r>'% self.name
 
 class author(models.Model):
-    name = models.CharField(max_length=30,verbose_name='姓名')
+    name = models.CharField(max_length=30, verbose_name='姓名')
     age = models.IntegerField(verbose_name='年龄')
-    email = models.EmailField(null=True,verbose_name='邮件')
-# 由于是新增列，所以必须为默认值或者允许为空
-# BooleanField 默认不允许为空，所以此处选择了增加默认
-    isActive = models.BooleanField(default=True,verbose_name='激活用户')
+    email = models.EmailField(null=True, verbose_name='邮件')
+    # 由于是新增列，所以必须为默认值或者允许为空
+    # BooleanField 默认不允许为空，所以此处选择了增加默认
+    isActive = models.BooleanField(default=True, verbose_name='激活用户')
+    # 增加一个字段，表示用户头像，可以上传
+    picture = models.ImageField(upload_to='static/upload', null=True, verbose_name='头像')
+
     # 重写 __str__来定义该对象的字符串表示,展示的前端页面
     def __str__(self):
         return self.name
-  #增加内部的类Meta来定义展现形式
+
+    # 增加内部的类Meta来定义展现形式
     class Meta:
-       # 1.修改表名为author
+        # 1.修改表名为author
         db_table = 'author'
-    # 2.指定后台管理，指定的名字
+        # 2.指定后台管理，指定的名字
         verbose_name = '作者'
         verbose_name_plural = verbose_name
         # 3.指定按age年龄排序
@@ -49,6 +53,9 @@ class author(models.Model):
 class bOOK(models.Model):
     title = models.CharField(max_length=50)
     publicate_data = models.DateField()
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         # 1.修改表名为author
